@@ -5,15 +5,14 @@ import PinDropIcon from "@mui/icons-material/PinDrop";
 import PublicIcon from "@mui/icons-material/Public";
 import TransferWithinAStationIcon from "@mui/icons-material/TransferWithinAStation";
 import { Country, State } from "country-state-city";
-import React, { lazy, Suspense, Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingInfo } from "../../../redux/actions/cartAction";
-import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
+import CheckoutSteps from "./CheckoutSteps";
 import "./Shipping.scss";
-import { useAlert } from "react-alert";
-const CheckoutSteps = lazy(() => import("./CheckoutSteps"));
 
 const Shipping = ({ history }) => {
   const dispatch = useDispatch();
@@ -43,9 +42,8 @@ const Shipping = ({ history }) => {
   return (
     <Fragment>
       <MetaData title="Shipping Details" />
-      <Suspense fallback={<Loader />}>
-        <CheckoutSteps activeStep={0} />
-      </Suspense>
+
+      <CheckoutSteps activeStep={0} />
 
       <div className="shippingContainer">
         <div className="shippingBox">

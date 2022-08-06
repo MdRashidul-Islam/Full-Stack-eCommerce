@@ -1,12 +1,10 @@
-import React, { Fragment, lazy, Suspense } from "react";
+import React, { Fragment } from "react";
 
 import { useSelector } from "react-redux";
-import "./ConfirmOrder.scss";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../common/MetaData";
-import Loader from "../common/Loader/Loader";
-const CheckoutSteps = lazy(() => import("./CheckoutSteps"));
+import CheckoutSteps from "./CheckoutSteps";
+import "./ConfirmOrder.scss";
 
 const ConfirmOrder = () => {
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
@@ -41,10 +39,7 @@ const ConfirmOrder = () => {
   return (
     <Fragment>
       <MetaData title="Confirm Order" />
-      <Suspense fallback={<Loader />}>
-        <CheckoutSteps activeStep={1} />
-      </Suspense>
-      ;
+      <CheckoutSteps activeStep={1} />;
       <div className="confirmOrderPage">
         <div>
           <div className="confirmshippingArea">

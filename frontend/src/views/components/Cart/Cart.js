@@ -1,15 +1,13 @@
-import React, { Fragment, lazy, Suspense } from "react";
-import "./Cart.scss";
-import { useSelector, useDispatch } from "react-redux";
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import React, { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
   addItemsToCart,
   removeItemsFromCart,
 } from "../../../redux/actions/cartAction";
-import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
-import { Link, useNavigate } from "react-router-dom";
-import Loader from "../common/Loader/Loader";
-
-const CartItemCard = lazy(() => import("./CartItemCard"));
+import "./Cart.scss";
+import CartItemCard from "./CartItemCard";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -60,12 +58,7 @@ const Cart = () => {
             {cartItems &&
               cartItems.map((item) => (
                 <div className="cartContainer" key={item.product}>
-                  <Suspense fallback={<Loader />}>
-                    <CartItemCard
-                      item={item}
-                      deleteCartItems={deleteCartItems}
-                    />
-                  </Suspense>
+                  <CartItemCard item={item} deleteCartItems={deleteCartItems} />
 
                   <div className="cartInput">
                     <button

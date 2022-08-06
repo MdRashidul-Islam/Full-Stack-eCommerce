@@ -3,6 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
 
+import Fade from "react-reveal/Fade";
 import "./Banner.scss";
 
 const Banner = () => {
@@ -15,27 +16,30 @@ const Banner = () => {
         showArrows={true}
         showThumbs={false}
         swipeable={true}
-        // stopOnHover={true}
         style={{ zIndex: -1 }}
       >
         <div className="firstSlide addBg2">
-          <div className="left">
-            <h1>
-              Apple <br /> iPhone 13 Pro Max
-            </h1>
-            <p>UNDER FAVORABLE SMARTPHONES</p>
-            <p>From</p>
-            <h2>
-              <sup>$</sup>1700<sup>99</sup>
-            </h2>
-            <Link to={`/product/62a07e3c4f1ec9a8972e6b02`}>
-              <button>Start Buying</button>
-            </Link>
-          </div>
+          <Fade left>
+            <div className="left">
+              <h1>
+                Apple <br /> iPhone 13 Pro Max
+              </h1>
+              <p>UNDER FAVORABLE SMARTPHONES</p>
+              <p>From</p>
+              <h2>
+                <sup>$</sup>1700<sup>99</sup>
+              </h2>
+              <Link to={`/product/62a07e3c4f1ec9a8972e6b02`}>
+                <button>Start Buying</button>
+              </Link>
+            </div>
+          </Fade>
 
-          <div className="right">
-            <img src="https://i.ibb.co/YjqGtbd/aaaa.png" alt="" />
-          </div>
+          <Fade right>
+            <div className="right">
+              <img src="https://i.ibb.co/YjqGtbd/aaaa.png" alt="" />
+            </div>
+          </Fade>
         </div>
 
         <div className="firstSlide addBg1">

@@ -1,72 +1,43 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import { loadUser } from "./redux/actions/userAction";
 import store from "./store";
-import Loader from "./views/components/common/Loader/Loader";
 
 import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
-
+import Cart from "./views/components/Cart/Cart";
+import ConfirmOrder from "./views/components/Cart/ConfirmOrder";
+import OrderSuccess from "./views/components/Cart/OrderSuccess";
+import Payment from "./views/components/Cart/Payment";
+import Shipping from "./views/components/Cart/Shipping";
 import ScrollToTop from "./views/components/common/ScrollToTop";
-
-const Cart = () => import("./views/components/Cart/Cart");
-const ConfirmOrder = () => import("./views/components/Cart/ConfirmOrder");
-const OrderSuccess = () => import("./views/components/Cart/OrderSuccess");
-const Payment = () => import("./views/components/Cart/Payment");
-const Shipping = () => import("./views/components/Cart/Shipping");
-
-const UserOptions = () => import("./views/components/common/UserOptions");
-const Dashboard = () => import("./views/components/Dashboard/Dashboard");
-
-const Dhome = lazy(() => import("./views/components/Dashboard/Dhome"));
-const NewProduct = lazy(() =>
-  import("./views/components/Dashboard/NewProduct")
-);
-const OrderList = lazy(() => import("./views/components/Dashboard/OrderList"));
-const ProcessOrder = lazy(() =>
-  import("./views/components/Dashboard/ProcessOrder")
-);
-const ProductList = lazy(() =>
-  import("./views/components/Dashboard/ProductList")
-);
-const ProductReviews = lazy(() =>
-  import("./views/components/Dashboard/ProductReviews")
-);
-const UpdateProduct = lazy(() =>
-  import("./views/components/Dashboard/UpdateProduct")
-);
-const UpdateUser = lazy(() =>
-  import("./views/components/Dashboard/UpdateUser")
-);
-const UsersList = lazy(() => import("./views/components/Dashboard/UsersList"));
-const MyOrders = lazy(() => import("./views/components/Order/MyOrders"));
-const OrderDetails = lazy(() =>
-  import("./views/components/Order/OrderDetails")
-);
-const ForgotPassword = lazy(() =>
-  import("./views/components/user/ForgotPassword")
-);
-const LoginSignUp = lazy(() => import("./views/components/user/LoginSignUp"));
-const ResetPassword = lazy(() =>
-  import("./views/components/user/ResetPassword")
-);
-const UpdatePassword = lazy(() =>
-  import("./views/components/user/UpdatePassword")
-);
-const UpdateProfile = lazy(() =>
-  import("./views/components/user/UpdateProfile")
-);
-const HomePage = lazy(() => import("./views/pages/HomePage"));
-const ProductDetailsPage = lazy(() =>
-  import("./views/pages/ProductDetailsPage")
-);
-const ProductPage = lazy(() => import("./views/pages/ProductPage"));
-const ProfilePage = lazy(() => import("./views/pages/ProfilePage"));
+import UserOptions from "./views/components/common/UserOptions";
+import Dashboard from "./views/components/Dashboard/Dashboard";
+import Dhome from "./views/components/Dashboard/Dhome";
+import NewProduct from "./views/components/Dashboard/NewProduct";
+import OrderList from "./views/components/Dashboard/OrderList";
+import ProcessOrder from "./views/components/Dashboard/ProcessOrder";
+import ProductList from "./views/components/Dashboard/ProductList";
+import ProductReviews from "./views/components/Dashboard/ProductReviews";
+import UpdateProduct from "./views/components/Dashboard/UpdateProduct";
+import UpdateUser from "./views/components/Dashboard/UpdateUser";
+import UsersList from "./views/components/Dashboard/UsersList";
+import MyOrders from "./views/components/Order/MyOrders";
+import OrderDetails from "./views/components/Order/OrderDetails";
+import ForgotPassword from "./views/components/user/ForgotPassword";
+import LoginSignUp from "./views/components/user/LoginSignUp";
+import ResetPassword from "./views/components/user/ResetPassword";
+import UpdatePassword from "./views/components/user/UpdatePassword";
+import UpdateProfile from "./views/components/user/UpdateProfile";
+import HomePage from "./views/pages/HomePage";
+import ProductDetailsPage from "./views/pages/ProductDetailsPage";
+import ProductPage from "./views/pages/ProductPage";
+import ProfilePage from "./views/pages/ProfilePage";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -87,53 +58,19 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<Loader />}>
-        {isAuthenticated && <UserOptions user={user} />}
-      </Suspense>
+      {isAuthenticated && <UserOptions user={user} />}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <HomePage />
-              </Suspense>
-            </>
-          }
-        />
+        <Route path="/" element={<HomePage />} />
 
         {/* product route */}
-        <Route
-          path="products"
-          element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ProductPage />
-              </Suspense>
-            </>
-          }
-        />
-
-        <Route
-          path="products/:keyword"
-          element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ProductPage />
-              </Suspense>
-            </>
-          }
-        />
+        <Route path="products" element={<ProductPage />} />
+        <Route path="products/:keyword" element={<ProductPage />} />
         <Route
           path="product/:id"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ProductDetailsPage />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <ProductDetailsPage />
+            </PrivateRoute>
           }
         />
 
@@ -142,68 +79,36 @@ function App() {
         <Route
           path="account"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ProfilePage />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
           }
         />
         <Route
           path="account/update"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <UpdateProfile />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <UpdateProfile />
+            </PrivateRoute>
           }
         />
         <Route
           path="password/update"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <UpdatePassword />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <UpdatePassword />
+            </PrivateRoute>
           }
         />
-        <Route
-          path="password/forgot"
-          element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ForgotPassword />
-              </Suspense>
-            </>
-          }
-        />
-        <Route
-          path="password/reset/:token"
-          element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ResetPassword />
-              </Suspense>
-            </>
-          }
-        />
+        <Route path="password/forgot" element={<ForgotPassword />} />
+        <Route path="password/reset/:token" element={<ResetPassword />} />
 
         {/* cart route */}
         <Route
           path="cart"
           element={
             <PrivateRoute>
-              <Suspense fallback={<Loader />}>
-                <Cart />
-              </Suspense>
+              <Cart />
             </PrivateRoute>
           }
         />
@@ -212,9 +117,7 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <Shipping />
-                </Suspense>
+                <Shipping />
               </PrivateRoute>
             </>
           }
@@ -224,29 +127,18 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ConfirmOrder />
-                </Suspense>
+                <ConfirmOrder />
               </PrivateRoute>
             </>
           }
         />
-        <Route
-          path="success"
-          element={
-            <Suspense fallback={<Loader />}>
-              <OrderSuccess />
-            </Suspense>
-          }
-        />
+        <Route path="success" element={<OrderSuccess />} />
         <Route
           path="orders"
           element={
             <>
               <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <MyOrders />
-                </Suspense>
+                <MyOrders />
               </PrivateRoute>
             </>
           }
@@ -256,9 +148,7 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <OrderDetails />
-                </Suspense>
+                <OrderDetails />
               </PrivateRoute>
             </>
           }
@@ -270,9 +160,7 @@ function App() {
               <>
                 <PrivateRoute>
                   <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Suspense fallback={<Loader />}>
-                      <Payment />
-                    </Suspense>
+                    <Payment />
                   </Elements>
                 </PrivateRoute>
               </>
@@ -287,9 +175,7 @@ function App() {
             path="admin"
             element={
               <AdminRoute>
-                <Suspense fallback={<Loader />}>
-                  <Dashboard />
-                </Suspense>
+                <Dashboard />
               </AdminRoute>
             }
           >
@@ -297,9 +183,7 @@ function App() {
               path="products"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <ProductList />
-                  </Suspense>
+                  <ProductList />
                 </AdminRoute>
               }
             />
@@ -307,9 +191,7 @@ function App() {
               path="product/:id"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <UpdateProduct />
-                  </Suspense>
+                  <UpdateProduct />
                 </AdminRoute>
               }
             />
@@ -317,9 +199,7 @@ function App() {
               path="product"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <NewProduct />
-                  </Suspense>
+                  <NewProduct />
                 </AdminRoute>
               }
             />
@@ -327,9 +207,7 @@ function App() {
               path="orders"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <OrderList />
-                  </Suspense>
+                  <OrderList />
                 </AdminRoute>
               }
             />
@@ -337,9 +215,7 @@ function App() {
               path="order/:id"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <ProcessOrder />
-                  </Suspense>
+                  <ProcessOrder />
                 </AdminRoute>
               }
             />
@@ -347,9 +223,7 @@ function App() {
               path="users"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <UsersList />
-                  </Suspense>
+                  <UsersList />
                 </AdminRoute>
               }
             />
@@ -357,9 +231,7 @@ function App() {
               path="user/:id"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <UpdateUser />
-                  </Suspense>
+                  <UpdateUser />
                 </AdminRoute>
               }
             />
@@ -367,9 +239,7 @@ function App() {
               path="reviews"
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <ProductReviews />
-                  </Suspense>
+                  <ProductReviews />
                 </AdminRoute>
               }
             />
@@ -377,16 +247,13 @@ function App() {
               index
               element={
                 <AdminRoute>
-                  <Suspense fallback={<Loader />}>
-                    <Dhome />
-                  </Suspense>
+                  <Dhome />
                 </AdminRoute>
               }
             />
           </Route>
         )}
       </Routes>
-      ;
     </>
   );
 }

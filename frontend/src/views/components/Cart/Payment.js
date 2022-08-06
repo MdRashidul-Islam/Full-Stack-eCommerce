@@ -1,25 +1,22 @@
-import React, { lazy, Suspense, Fragment, useEffect, useRef } from "react";
-
-import { useSelector, useDispatch } from "react-redux";
-import MetaData from "../common/MetaData";
-
-import {
-  CardNumberElement,
-  CardCvcElement,
-  CardExpiryElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./payment.scss";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import EventIcon from "@mui/icons-material/Event";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import { createOrder, clearErrors } from "../../../redux/actions/orderAction";
-import Loader from "../common/Loader/Loader";
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import axios from "axios";
+import React, { Fragment, useEffect, useRef } from "react";
 import { useAlert } from "react-alert";
-const CheckoutSteps = lazy(() => import("./CheckoutSteps"));
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearErrors, createOrder } from "../../../redux/actions/orderAction";
+import MetaData from "../common/MetaData";
+import CheckoutSteps from "./CheckoutSteps";
+import "./payment.scss";
 
 const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -124,9 +121,9 @@ const Payment = () => {
   return (
     <Fragment>
       <MetaData title="Payment" />
-      <Suspense fallback={<Loader />}>
-        <CheckoutSteps activeStep={2} />
-      </Suspense>
+
+      <CheckoutSteps activeStep={2} />
+
       <div className="paymentContainer">
         <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>
           <h4>Card Info</h4>

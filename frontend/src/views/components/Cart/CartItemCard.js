@@ -1,6 +1,6 @@
 import React from "react";
-import "./CartItemCard.scss";
 import { Link } from "react-router-dom";
+import "./CartItemCard.scss";
 
 const CartItemCard = ({ item, deleteCartItems }) => {
   return (
