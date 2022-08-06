@@ -13,14 +13,13 @@ import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 
 import ScrollToTop from "./views/components/common/ScrollToTop";
-
+import UserOptions from "./views/components/common/UserOptions";
 const Cart = () => import("./views/components/Cart/Cart");
 const ConfirmOrder = () => import("./views/components/Cart/ConfirmOrder");
 const OrderSuccess = () => import("./views/components/Cart/OrderSuccess");
 const Payment = () => import("./views/components/Cart/Payment");
 const Shipping = () => import("./views/components/Cart/Shipping");
 
-const UserOptions = () => import("./views/components/common/UserOptions");
 const Dashboard = () => import("./views/components/Dashboard/Dashboard");
 
 const Dhome = lazy(() => import("./views/components/Dashboard/Dhome"));
@@ -87,9 +86,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<Loader />}>
-        {isAuthenticated && <UserOptions user={user} />}
-      </Suspense>
+      {isAuthenticated && <UserOptions user={user} />}
       <Routes>
         <Route
           path="/"

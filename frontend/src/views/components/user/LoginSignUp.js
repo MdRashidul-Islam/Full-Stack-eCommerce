@@ -2,8 +2,8 @@ import FaceIcon from "@mui/icons-material/Face";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   clearErrors,
@@ -75,8 +75,6 @@ const LoginSignUp = () => {
     }
   };
 
-  const redirect = location.search ? location.search.split("=")[1] : "/account";
-
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -84,9 +82,9 @@ const LoginSignUp = () => {
     }
 
     if (isAuthenticated) {
-      navigate(redirect);
+      navigate("/account");
     }
-  }, [dispatch, error, navigate, isAuthenticated, redirect, alert]);
+  }, [dispatch, error, navigate, isAuthenticated, alert]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
