@@ -1,0 +1,98 @@
+.firstSlide {
+  height: 88vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: -1;
+
+  @media (max-width: 700px) {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .left {
+    text-align: start;
+    h1 {
+      font-size: 56px;
+      line-height: 60px;
+      margin-bottom: 10px;
+      color: #545454;
+      font-weight: 100;
+    }
+    p {
+      font-size: 16px;
+      font-weight: bold;
+      color: #545454;
+    }
+    h2 {
+      margin: 10px 0px;
+      font-size: 50px;
+      font-weight: bold;
+      color: #545454;
+      sup {
+        font-size: 26px;
+      }
+    }
+    button {
+      margin: 10px 0px;
+      padding: 14px 40px;
+      border: 2px solid #ef5306;
+      background: #ef5306;
+      font-weight: bold;
+      border-radius: 1px;
+      transition: 0.4s ease-in-out;
+      color: white;
+
+      &:hover {
+        background: #e45e11;
+        color: white;
+      }
+    }
+    @media (max-width: 700px) {
+      padding: 10px 40px;
+      h1 {
+        padding-top: 40px;
+        font-size: 25px;
+        line-height: 36px;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 400px;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+    @media (max-width: 700px) {
+      width: 100%;
+      padding: 20px;
+      height: 250px;
+      width: 250px;
+    }
+  }
+}
+
+.addBg1 {
+  background-image: url("https://i.ibb.co/NCy5WL3/rm222batch3-mind-03.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.addBg2 {
+  background-image: url("https://i.ibb.co/cFgyNRj/SL-042620-30310-19.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.addBg3 {
+  background-image: url("https://i.ibb.co/TBby6qF/Screenshot-1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
