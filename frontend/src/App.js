@@ -10,13 +10,14 @@ import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import store from "./store";
 import Payment from "./views/components/Cart/Payment";
+import Shipping from "./views/components/Cart/Shipping";
 import Loader from "./views/components/common/Loader/Loader";
 import ScrollToTop from "./views/components/common/ScrollToTop";
 import UserOptions from "./views/components/common/UserOptions";
+
 const ConfirmOrder = lazy(() => import("./views/components/Cart/ConfirmOrder"));
 
 const OrderSuccess = lazy(() => import("./views/components/Cart/OrderSuccess"));
-const Shipping = lazy(() => import("./views/components/Cart/Shipping"));
 
 const Cart = lazy(() => import("./views/components/Cart/Cart"));
 const Dashboard = lazy(() => import("./views/components/Dashboard/Dashboard"));
@@ -216,9 +217,7 @@ function App() {
           path="shipping"
           element={
             <PrivateRoute>
-              <Suspense fallback={<Loader />}>
-                <Shipping />
-              </Suspense>
+              <Shipping />
             </PrivateRoute>
           }
         />
