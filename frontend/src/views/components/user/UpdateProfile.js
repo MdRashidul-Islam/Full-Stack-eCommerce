@@ -8,8 +8,8 @@ import {
   clearErrors,
   loadUser,
   updateProfile,
-} from "../../../redux//actions/userAction";
-import { UPDATE_PROFILE_RESET } from "../../../redux//constants/userConstants";
+} from "../../../redux/actions/userAction";
+import { UPDATE_PROFILE_RESET } from "../../../redux/constants/userConstants";
 import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
 import "./UpdateProfile.scss";
@@ -29,7 +29,7 @@ const UpdateProfile = () => {
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
-
+    console.log(name, email);
     const myForm = new FormData();
 
     myForm.set("name", name);
@@ -59,6 +59,7 @@ const UpdateProfile = () => {
     }
 
     if (error) {
+      console.log(error);
       alert.error(error);
       dispatch(clearErrors());
     }

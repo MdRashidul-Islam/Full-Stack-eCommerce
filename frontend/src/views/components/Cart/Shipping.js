@@ -14,7 +14,7 @@ import MetaData from "../common/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
 import "./Shipping.scss";
 
-const Shipping = ({ history }) => {
+const Shipping = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { shippingInfo } = useSelector((state) => state.cart);

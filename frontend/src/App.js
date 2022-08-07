@@ -1,7 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
@@ -13,13 +13,14 @@ import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 
 import ScrollToTop from "./views/components/common/ScrollToTop";
-import UserOptions from "./views/components/common/UserOptions";
+
 const Cart = () => import("./views/components/Cart/Cart");
 const ConfirmOrder = () => import("./views/components/Cart/ConfirmOrder");
 const OrderSuccess = () => import("./views/components/Cart/OrderSuccess");
 const Payment = () => import("./views/components/Cart/Payment");
 const Shipping = () => import("./views/components/Cart/Shipping");
 
+const UserOptions = () => import("./views/components/common/UserOptions");
 const Dashboard = () => import("./views/components/Dashboard/Dashboard");
 
 const Dhome = lazy(() => import("./views/components/Dashboard/Dhome"));
@@ -86,16 +87,16 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      {isAuthenticated && <UserOptions user={user} />}
+      <Suspense fallback={<Loader />}>
+        {isAuthenticated && <UserOptions user={user} />}
+      </Suspense>
       <Routes>
         <Route
           path="/"
           element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <HomePage />
-              </Suspense>
-            </>
+            <Suspense fallback={<Loader />}>
+              <HomePage />
+            </Suspense>
           }
         />
 
@@ -103,34 +104,28 @@ function App() {
         <Route
           path="products"
           element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ProductPage />
-              </Suspense>
-            </>
+            <Suspense fallback={<Loader />}>
+              <ProductPage />
+            </Suspense>
           }
         />
 
         <Route
           path="products/:keyword"
           element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ProductPage />
-              </Suspense>
-            </>
+            <Suspense fallback={<Loader />}>
+              <ProductPage />
+            </Suspense>
           }
         />
         <Route
           path="product/:id"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ProductDetailsPage />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <ProductDetailsPage />
+              </Suspense>
+            </PrivateRoute>
           }
         />
 
@@ -146,57 +141,47 @@ function App() {
         <Route
           path="account"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ProfilePage />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <ProfilePage />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
           path="account/update"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <UpdateProfile />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <UpdateProfile />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
           path="password/update"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <UpdatePassword />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <UpdatePassword />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
           path="password/forgot"
           element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ForgotPassword />
-              </Suspense>
-            </>
+            <Suspense fallback={<Loader />}>
+              <ForgotPassword />
+            </Suspense>
           }
         />
         <Route
           path="password/reset/:token"
           element={
-            <>
-              <Suspense fallback={<Loader />}>
-                <ResetPassword />
-              </Suspense>
-            </>
+            <Suspense fallback={<Loader />}>
+              <ResetPassword />
+            </Suspense>
           }
         />
 
@@ -214,25 +199,21 @@ function App() {
         <Route
           path="shipping"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <Shipping />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <Shipping />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
           path="order/confirm"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ConfirmOrder />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <ConfirmOrder />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
@@ -246,40 +227,34 @@ function App() {
         <Route
           path="orders"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <MyOrders />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <MyOrders />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
           path="order/:id"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <OrderDetails />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <OrderDetails />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         {stripeApiKey && (
           <Route
             path="process/payment"
             element={
-              <>
-                <PrivateRoute>
-                  <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Suspense fallback={<Loader />}>
-                      <Payment />
-                    </Suspense>
-                  </Elements>
-                </PrivateRoute>
-              </>
+              <PrivateRoute>
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                  <Suspense fallback={<Loader />}>
+                    <Payment />
+                  </Suspense>
+                </Elements>
+              </PrivateRoute>
             }
           />
         )}
@@ -390,7 +365,6 @@ function App() {
           </Route>
         )}
       </Routes>
-      ;
     </>
   );
 }

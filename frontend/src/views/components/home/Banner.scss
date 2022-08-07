@@ -5,6 +5,9 @@
   justify-content: space-evenly;
   align-items: center;
   z-index: -1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   @media (max-width: 700px) {
     height: 70vh;
@@ -80,19 +83,10 @@
 
 .addBg1 {
   background-image: url("https://i.ibb.co/NCy5WL3/rm222batch3-mind-03.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 }
 .addBg2 {
   background-image: url("https://i.ibb.co/cFgyNRj/SL-042620-30310-19.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 }
 .addBg3 {
   background-image: url("https://i.ibb.co/TBby6qF/Screenshot-1.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 }

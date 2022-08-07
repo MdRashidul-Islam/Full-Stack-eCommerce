@@ -3,10 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearErrors,
-  forgotPassword,
-} from "../../../redux//actions/userAction";
+import { clearErrors, forgotPassword } from "../../../redux/actions/userAction";
 import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
 import "./ForgotPassword.scss";

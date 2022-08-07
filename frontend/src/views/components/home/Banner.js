@@ -16,7 +16,7 @@ const Banner = () => {
         showArrows={true}
         showThumbs={false}
         swipeable={true}
-        style={{ zIndex: -1 }}
+        style={{ zIndex: -111 }}
       >
         <div className="firstSlide addBg2">
           <Fade left>

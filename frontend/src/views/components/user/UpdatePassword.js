@@ -1,15 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
-import "./UpdatePassword.scss";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  clearErrors,
-  updatePassword,
-} from "../../../redux//actions/userAction";
+import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { UPDATE_PASSWORD_RESET } from "../../../redux//constants/userConstants";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, updatePassword } from "../../../redux/actions/userAction";
+import { UPDATE_PASSWORD_RESET } from "../../../redux/constants/userConstants";
+import "./UpdatePassword.scss";
 
-import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useNavigate } from "react-router-dom";
 import Loader from "../common/Loader/Loader";

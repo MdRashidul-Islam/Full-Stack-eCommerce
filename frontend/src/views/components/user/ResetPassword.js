@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { clearErrors, resetPassword } from "../../../redux//actions/userAction";
+import { clearErrors, resetPassword } from "../../../redux/actions/userAction";
 import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
 import "./ResetPassword.scss";
