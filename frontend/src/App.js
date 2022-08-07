@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import { loadUser } from "./redux/actions/userAction";
-import store from "./store";
-import Loader from "./views/components/common/Loader/Loader";
-
 import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
+import store from "./store";
+import Loader from "./views/components/common/Loader/Loader";
+import UserOptions from "./views/components/common/UserOptions";
 
 import ScrollToTop from "./views/components/common/ScrollToTop";
 
@@ -20,7 +20,6 @@ const OrderSuccess = () => import("./views/components/Cart/OrderSuccess");
 const Payment = () => import("./views/components/Cart/Payment");
 const Shipping = () => import("./views/components/Cart/Shipping");
 
-const UserOptions = () => import("./views/components/common/UserOptions");
 const Dashboard = () => import("./views/components/Dashboard/Dashboard");
 
 const Dhome = lazy(() => import("./views/components/Dashboard/Dhome"));
@@ -87,9 +86,9 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<Loader />}>
-        {isAuthenticated && <UserOptions user={user} />}
-      </Suspense>
+
+      {isAuthenticated && <UserOptions user={user} />}
+
       <Routes>
         <Route
           path="/"
