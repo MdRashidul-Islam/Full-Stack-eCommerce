@@ -1,7 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
@@ -27,18 +27,22 @@ import ProductReviews from "./views/components/Dashboard/ProductReviews";
 import UpdateProduct from "./views/components/Dashboard/UpdateProduct";
 import UpdateUser from "./views/components/Dashboard/UpdateUser";
 import UsersList from "./views/components/Dashboard/UsersList";
-import MyOrders from "./views/components/Order/MyOrders";
+
 import OrderDetails from "./views/components/Order/OrderDetails";
 import ForgotPassword from "./views/components/user/ForgotPassword";
-import LoginSignUp from "./views/components/user/LoginSignUp";
+
 import ResetPassword from "./views/components/user/ResetPassword";
 import UpdatePassword from "./views/components/user/UpdatePassword";
 import UpdateProfile from "./views/components/user/UpdateProfile";
 
+import Loader from "./views/components/common/Loader/Loader";
 import HomePage from "./views/pages/HomePage";
 import ProductDetailsPage from "./views/pages/ProductDetailsPage";
 import ProductPage from "./views/pages/ProductPage";
 import ProfilePage from "./views/pages/ProfilePage";
+
+const MyOrders = lazy(() => import("./views/components/Order/MyOrders"));
+const LoginSignUp = lazy(() => import("./views/components/user/LoginSignUp"));
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -76,7 +80,14 @@ function App() {
         />
 
         {/* user route */}
-        <Route path="login" element={<LoginSignUp />} />
+        <Route
+          path="login"
+          element={
+            <Suspense fallback={<Loader />}>
+              <LoginSignUp />
+            </Suspense>
+          }
+        />
         <Route
           path="account"
           element={
@@ -139,7 +150,9 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <MyOrders />
+                <Suspense fallback={<Loader />}>
+                  <MyOrders />
+                </Suspense>
               </PrivateRoute>
             </>
           }
