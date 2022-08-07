@@ -1,12 +1,16 @@
-import React from "react";
-import Header from "../components/common/Header/Header";
-import Products from "../components/products/Products";
+import React, { lazy, Suspense } from "react";
+import Loader from "../components/common/Loader/Loader";
+
+const Header = lazy(() => import("../components/common/Header/Header"));
+const Products = lazy(() => import("../components/products/Products"));
 
 const ProductPage = () => {
   return (
     <div>
-      <Header />
-      <Products />
+      <Suspense fallback={<Loader />}>
+        <Header />
+        <Products />
+      </Suspense>
     </div>
   );
 };

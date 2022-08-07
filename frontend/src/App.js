@@ -215,13 +215,11 @@ function App() {
         <Route
           path="shipping"
           element={
-            <>
-              <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <Shipping />
-                </Suspense>
-              </PrivateRoute>
-            </>
+            <PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <Shipping />
+              </Suspense>
+            </PrivateRoute>
           }
         />
         <Route
