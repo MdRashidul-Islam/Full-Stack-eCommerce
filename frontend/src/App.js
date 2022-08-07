@@ -12,13 +12,12 @@ import store from "./store";
 import Loader from "./views/components/common/Loader/Loader";
 import UserOptions from "./views/components/common/UserOptions";
 
+import Cart from "./views/components/Cart/Cart";
+import ConfirmOrder from "./views/components/Cart/ConfirmOrder";
+import OrderSuccess from "./views/components/Cart/OrderSuccess";
+import Payment from "./views/components/Cart/Payment";
+import Shipping from "./views/components/Cart/Shipping";
 import ScrollToTop from "./views/components/common/ScrollToTop";
-
-const Cart = () => import("./views/components/Cart/Cart");
-const ConfirmOrder = () => import("./views/components/Cart/ConfirmOrder");
-const OrderSuccess = () => import("./views/components/Cart/OrderSuccess");
-const Payment = () => import("./views/components/Cart/Payment");
-const Shipping = () => import("./views/components/Cart/Shipping");
 
 const Dashboard = () => import("./views/components/Dashboard/Dashboard");
 
@@ -207,9 +206,7 @@ function App() {
           path="cart"
           element={
             <PrivateRoute>
-              <Suspense fallback={<Loader />}>
-                <Cart />
-              </Suspense>
+              <Cart />
             </PrivateRoute>
           }
         />
@@ -218,9 +215,7 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <Shipping />
-                </Suspense>
+                <Shipping />
               </PrivateRoute>
             </>
           }
@@ -230,21 +225,12 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <Suspense fallback={<Loader />}>
-                  <ConfirmOrder />
-                </Suspense>
+                <ConfirmOrder />
               </PrivateRoute>
             </>
           }
         />
-        <Route
-          path="success"
-          element={
-            <Suspense fallback={<Loader />}>
-              <OrderSuccess />
-            </Suspense>
-          }
-        />
+        <Route path="success" element={<OrderSuccess />} />
         <Route
           path="orders"
           element={
@@ -276,9 +262,7 @@ function App() {
               <>
                 <PrivateRoute>
                   <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Suspense fallback={<Loader />}>
-                      <Payment />
-                    </Suspense>
+                    <Payment />
                   </Elements>
                 </PrivateRoute>
               </>
