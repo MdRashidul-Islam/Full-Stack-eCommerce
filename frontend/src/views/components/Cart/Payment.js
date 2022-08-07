@@ -9,14 +9,15 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, lazy, Suspense, useEffect, useRef } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearErrors, createOrder } from "../../../redux/actions/orderAction";
+import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
-import CheckoutSteps from "./CheckoutSteps";
 import "./payment.scss";
+const CheckoutSteps = lazy(() => import("./CheckoutSteps"));
 
 const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -121,8 +122,9 @@ const Payment = () => {
   return (
     <Fragment>
       <MetaData title="Payment" />
-
-      <CheckoutSteps activeStep={2} />
+      <Suspense fallback={<Loader />}>
+        <CheckoutSteps activeStep={2} />
+      </Suspense>
 
       <div className="paymentContainer">
         <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>

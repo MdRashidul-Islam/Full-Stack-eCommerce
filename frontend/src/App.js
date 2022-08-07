@@ -1,7 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
@@ -15,7 +15,6 @@ import ConfirmOrder from "./views/components/Cart/ConfirmOrder";
 import OrderSuccess from "./views/components/Cart/OrderSuccess";
 import Payment from "./views/components/Cart/Payment";
 import Shipping from "./views/components/Cart/Shipping";
-import Loader from "./views/components/common/Loader/Loader";
 import ScrollToTop from "./views/components/common/ScrollToTop";
 import UserOptions from "./views/components/common/UserOptions";
 import Dashboard from "./views/components/Dashboard/Dashboard";
@@ -36,11 +35,10 @@ import ResetPassword from "./views/components/user/ResetPassword";
 import UpdatePassword from "./views/components/user/UpdatePassword";
 import UpdateProfile from "./views/components/user/UpdateProfile";
 
+import HomePage from "./views/pages/HomePage";
 import ProductDetailsPage from "./views/pages/ProductDetailsPage";
 import ProductPage from "./views/pages/ProductPage";
 import ProfilePage from "./views/pages/ProfilePage";
-
-const HomePage = lazy(() => import("./views/pages/HomePage"));
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -63,14 +61,7 @@ function App() {
       <ScrollToTop />
       {isAuthenticated && <UserOptions user={user} />}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Loader />}>
-              <HomePage />
-            </Suspense>
-          }
-        />
+        <Route path="/" element={<HomePage />} />
 
         {/* product route */}
         <Route path="products" element={<ProductPage />} />
