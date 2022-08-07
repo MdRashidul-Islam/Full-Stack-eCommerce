@@ -12,14 +12,14 @@ import store from "./store";
 import Loader from "./views/components/common/Loader/Loader";
 import UserOptions from "./views/components/common/UserOptions";
 
-import Cart from "./views/components/Cart/Cart";
-import ConfirmOrder from "./views/components/Cart/ConfirmOrder";
-import OrderSuccess from "./views/components/Cart/OrderSuccess";
-import Payment from "./views/components/Cart/Payment";
-import Shipping from "./views/components/Cart/Shipping";
 import ScrollToTop from "./views/components/common/ScrollToTop";
+const ConfirmOrder = lazy(() => import("./views/components/Cart/ConfirmOrder"));
+const Payment = lazy(() => import("./views/components/Cart/Payment"));
+const OrderSuccess = lazy(() => import("./views/components/Cart/OrderSuccess"));
+const Shipping = lazy(() => import("./views/components/Cart/Shipping"));
 
-const Dashboard = () => import("./views/components/Dashboard/Dashboard");
+const Cart = lazy(() => import("./views/components/Cart/Cart"));
+const Dashboard = lazy(() => import("./views/components/Dashboard/Dashboard"));
 
 const Dhome = lazy(() => import("./views/components/Dashboard/Dhome"));
 const NewProduct = lazy(() =>
@@ -206,7 +206,9 @@ function App() {
           path="cart"
           element={
             <PrivateRoute>
-              <Cart />
+              <Suspense fallback={<Loader />}>
+                <Cart />
+              </Suspense>
             </PrivateRoute>
           }
         />
@@ -215,7 +217,9 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <Shipping />
+                <Suspense fallback={<Loader />}>
+                  <Shipping />
+                </Suspense>
               </PrivateRoute>
             </>
           }
@@ -225,7 +229,9 @@ function App() {
           element={
             <>
               <PrivateRoute>
-                <ConfirmOrder />
+                <Suspense fallback={<Loader />}>
+                  <ConfirmOrder />
+                </Suspense>
               </PrivateRoute>
             </>
           }
@@ -261,9 +267,11 @@ function App() {
             element={
               <>
                 <PrivateRoute>
-                  <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Payment />
-                  </Elements>
+                  <Suspense fallback={<Loader />}>
+                    <Elements stripe={loadStripe(stripeApiKey)}>
+                      <Payment />
+                    </Elements>
+                  </Suspense>
                 </PrivateRoute>
               </>
             }
