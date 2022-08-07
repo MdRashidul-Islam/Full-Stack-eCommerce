@@ -1,6 +1,7 @@
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Fragment, useEffect } from "react";
 
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
@@ -8,7 +9,6 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { clearErrors, myOrders } from "../../../redux/actions/orderAction";
 import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
-import { useAlert } from "react-alert";
 
 import "./myOrders.scss";
 
@@ -65,7 +65,7 @@ const MyOrders = () => {
                         <Td>{item.totalPrice}</Td>
                         <Td>
                           <Link to={`/order/${item._id}`}>
-                            <LaunchIcon />
+                            <LaunchIcon style={{ color: "#3487B1" }} />
                           </Link>
                         </Td>
                       </Tr>

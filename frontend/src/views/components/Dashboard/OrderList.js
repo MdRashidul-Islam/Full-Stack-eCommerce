@@ -1,28 +1,25 @@
-import React, { Fragment, useEffect } from "react";
-
-import "./productList.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import React, { Fragment, useEffect } from "react";
+import { useAlert } from "react-alert";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import {
+  clearErrors,
   deleteOrder,
   getAllOrders,
-  clearErrors,
 } from "../../../redux/actions/orderAction";
 import { DELETE_ORDER_RESET } from "../../../redux/constants/orderConstants";
 import MetaData from "../common/MetaData";
-import { useAlert } from "react-alert";
+import "./productList.scss";
+
 const OrderList = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const alert = useAlert();
-
-  const { error, orders } = useSelector((state) => state.allOrders);
-
+  const { loading, error, orders } = useSelector((state) => state.allOrders);
   const { error: deleteError, isDeleted } = useSelector((state) => state.order);
 
   const deleteOrderHandler = (id) => {
@@ -48,76 +45,6 @@ const OrderList = () => {
     dispatch(getAllOrders());
   }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
 
-  const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 200, flex: 0.6 },
-
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 150,
-      flex: 0.4,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-    {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      width: 150,
-      textAlign: "center",
-      flex: 0.4,
-    },
-
-    {
-      field: "amount",
-      headerName: "Amount",
-      type: "number",
-      width: 150,
-      flex: 0.4,
-    },
-
-    {
-      field: "actions",
-      flex: 0.5,
-      headerName: "Actions",
-      width: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/admin/order/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link>
-
-            <button
-              onClick={() =>
-                deleteOrderHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </button>
-          </Fragment>
-        );
-      },
-    },
-  ];
-
-  const rows = [];
-
-  orders &&
-    orders.forEach((item) => {
-      rows.push({
-        id: item._id,
-        itemsQty: item.orderItems.length,
-        amount: item.totalPrice,
-        status: item.orderStatus,
-      });
-    });
-
   return (
     <Fragment>
       <MetaData title={`ALL ORDERS - Admin`} />
@@ -125,15 +52,94 @@ const OrderList = () => {
       <div className="dashboard">
         <div className="productListContainer">
           <h1 id="productListHeading">ALL ORDERS</h1>
+          {loading ? (
+            <div
+              style={{
+                height: "90vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                }}
+                className="spinner"
+              >
+                Loading...
+              </p>
+            </div>
+          ) : (
+            <Fragment>
+              <div className="myOrdersPage">
+                <Table className="Table">
+                  <Thead>
+                    <Tr>
+                      <Th>ID</Th>
+                      <Th>itemsQty</Th>
 
-          {/* <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={9}
-            disableSelectionOnClick
-            className="productListTable"
-            autoHeight
-          /> */}
+                      <Th>amount</Th>
+                      <Th>status</Th>
+                      <Th>Update Status</Th>
+                      <Th>Delete</Th>
+                    </Tr>
+                  </Thead>
+                  {orders &&
+                    orders.map((item) => (
+                      <Tbody key={item._id}>
+                        <Tr>
+                          <Td>{item._id}</Td>
+                          <Td
+                            style={{ textAlign: "center", fontWeight: "bold" }}
+                          >
+                            {item.orderItems.length}
+                          </Td>
+                          <Td
+                            style={{ textAlign: "center", fontWeight: "bold" }}
+                          >
+                            {item.totalPrice}
+                          </Td>
+                          <Td
+                            style={{
+                              color: `${
+                                item.orderStatus === "Delivered"
+                                  ? "green"
+                                  : "red"
+                              }`,
+                              textAlign: "center",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {item.orderStatus}
+                          </Td>
+
+                          <Td
+                            style={{ textAlign: "center", fontWeight: "bold" }}
+                          >
+                            <Link to={`/admin/order/${item._id}`}>
+                              <EditIcon sx={{ color: "#3487B1" }} />
+                            </Link>
+                          </Td>
+                          <Td
+                            style={{ textAlign: "center", fontWeight: "bold" }}
+                          >
+                            <Link
+                              to="#"
+                              onClick={() => deleteOrderHandler(item._id)}
+                            >
+                              <DeleteIcon sx={{ color: "#E54E39" }} />
+                            </Link>
+                          </Td>
+                        </Tr>
+                      </Tbody>
+                    ))}
+                </Table>
+              </div>
+            </Fragment>
+          )}
         </div>
       </div>
     </Fragment>

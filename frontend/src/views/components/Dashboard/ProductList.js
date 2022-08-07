@@ -2,6 +2,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Fragment, useEffect } from "react";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
@@ -14,7 +15,6 @@ import {
 import { DELETE_PRODUCT_RESET } from "../../../redux/constants/productConstants";
 import MetaData from "../common/MetaData";
 import "./productList.scss";
-import { useAlert } from "react-alert";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -50,70 +50,6 @@ const ProductList = () => {
     dispatch(getAdminProduct());
   }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
 
-  const columns = [
-    { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.4 },
-
-    {
-      field: "name",
-      headerName: "Name",
-      minWidth: 300,
-      flex: 0.7,
-    },
-    {
-      field: "stock",
-      headerName: "Stock",
-      type: "number",
-      minWidth: 100,
-      flex: 0.3,
-    },
-
-    {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      minWidth: 100,
-      flex: 0.3,
-    },
-
-    {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/admin/product/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link>
-
-            <button
-              onClick={() =>
-                deleteProductHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </button>
-          </Fragment>
-        );
-      },
-    },
-  ];
-
-  const rows = [];
-
-  products &&
-    products.forEach((item) => {
-      rows.push({
-        id: item._id,
-        stock: item.Stock,
-        price: item.price,
-        name: item.name,
-      });
-    });
-
   return (
     <Fragment>
       <MetaData title={`ALL PRODUCTS - Admin`} />
@@ -144,7 +80,7 @@ const ProductList = () => {
           ) : (
             <Fragment>
               <div className="myOrdersPage">
-                <Table>
+                <Table className="Table">
                   <Thead>
                     <Tr>
                       <Th>ID</Th>
@@ -161,20 +97,24 @@ const ProductList = () => {
                         <Tr>
                           <Td>{item._id}</Td>
                           <Td>{item.name}</Td>
-                          <Td>{item.Stock}</Td>
-                          <Td>{item.price}</Td>
+                          <Td
+                            style={{ textAlign: "center", fontWeight: "bold" }}
+                          >
+                            {item.Stock}
+                          </Td>
+                          <Td style={{ textAlign: "center" }}>{item.price}</Td>
 
-                          <Td>
+                          <Td style={{ textAlign: "center" }}>
                             <Link to={`/admin/product/${item._id}`}>
-                              <EditIcon sx={{ color: "#EF5306" }} />
+                              <EditIcon sx={{ color: "#3487B1" }} />
                             </Link>
                           </Td>
-                          <Td>
+                          <Td style={{ textAlign: "center" }}>
                             <Link
                               to="#"
                               onClick={() => deleteProductHandler(item._id)}
                             >
-                              <DeleteIcon sx={{ color: "red" }} />
+                              <DeleteIcon sx={{ color: "#E54E39" }} />
                             </Link>
                           </Td>
                         </Tr>
@@ -186,7 +126,6 @@ const ProductList = () => {
           )}
         </div>
       </div>
-      {/* for mobile device */}
     </Fragment>
   );
 };

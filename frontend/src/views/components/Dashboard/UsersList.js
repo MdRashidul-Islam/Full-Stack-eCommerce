@@ -1,7 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { Fragment, useEffect } from "react";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
@@ -15,13 +15,11 @@ import { DELETE_USER_RESET } from "../../../redux/constants/userConstants";
 import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
 import "./productList.scss";
-import { useAlert } from "react-alert";
 
 const UsersList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alert = useAlert();
-  const matches = useMediaQuery("(max-width:700px)");
 
   const { error, users, loading } = useSelector((state) => state.allUsers);
 
@@ -48,80 +46,12 @@ const UsersList = () => {
 
     if (isDeleted) {
       alert.success(message);
-      navigate("/admin");
+
       dispatch({ type: DELETE_USER_RESET });
     }
 
     dispatch(getAllUsers());
   }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
-
-  const columns = [
-    { field: "id", headerName: "User ID", width: 180, flex: 0.8 },
-
-    {
-      field: "email",
-      headerName: "Email",
-      width: 150,
-      flex: 1,
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      width: 100,
-      flex: 0.5,
-    },
-
-    {
-      field: "role",
-      headerName: "Role",
-      type: "number",
-      width: 100,
-      flex: 0.3,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "role") === "admin"
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-
-    {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      width: 100,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/admin/user/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link>
-
-            <button
-              onClick={() =>
-                deleteUserHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </button>
-          </Fragment>
-        );
-      },
-    },
-  ];
-
-  const rows = [];
-
-  users &&
-    users.forEach((item) => {
-      rows.push({
-        id: item._id,
-        role: item.role,
-        email: item.email,
-        name: item.name,
-      });
-    });
 
   return (
     <Fragment>
@@ -135,7 +65,7 @@ const UsersList = () => {
             <h1 id="productListHeading">ALL USERS</h1>
 
             <div className="myOrdersPage">
-              <Table>
+              <Table className="Table">
                 <Thead>
                   <Tr>
                     <Th>ID</Th>
@@ -153,19 +83,21 @@ const UsersList = () => {
                         <Td>{user._id}</Td>
                         <Td>{user.name}</Td>
                         <Td>{user.email}</Td>
-                        <Td>{user.role}</Td>
+                        <Td style={{ textAlign: "center", fontWeight: "bold" }}>
+                          {user.role}
+                        </Td>
 
-                        <Td>
-                          <Link to={`/admin/product/${user._id}`}>
-                            <EditIcon sx={{ color: "#EF5306" }} />
+                        <Td style={{ textAlign: "center", fontWeight: "bold" }}>
+                          <Link to={`/admin/user/${user._id}`}>
+                            <EditIcon sx={{ color: "#3487B1" }} />
                           </Link>
                         </Td>
-                        <Td>
+                        <Td style={{ textAlign: "center", fontWeight: "bold" }}>
                           <Link
                             to="#"
                             onClick={() => deleteUserHandler(user._id)}
                           >
-                            <DeleteIcon sx={{ color: "red" }} />
+                            <DeleteIcon sx={{ color: "#E54E39" }} />
                           </Link>
                         </Td>
                       </Tr>
@@ -173,15 +105,6 @@ const UsersList = () => {
                   ))}
               </Table>
             </div>
-
-            {/* <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                disableSelectionOnClick
-                className="productListTable"
-                autoHeight
-              /> */}
           </div>
         </div>
       )}

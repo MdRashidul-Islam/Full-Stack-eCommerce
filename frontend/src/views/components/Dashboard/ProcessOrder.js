@@ -1,19 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import { useAlert } from "react-alert";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  getOrderDetails,
   clearErrors,
+  getOrderDetails,
   updateOrder,
 } from "../../../redux/actions/orderAction";
-import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
 import { UPDATE_ORDER_RESET } from "../../../redux/constants/orderConstants";
-import "./processOrder.scss";
-import MetaData from "../common/MetaData";
 import Loader from "../common/Loader/Loader";
+import MetaData from "../common/MetaData";
+import "./processOrder.scss";
 
 const ProcessOrder = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
@@ -69,33 +69,28 @@ const ProcessOrder = () => {
             >
               <div>
                 <div className="confirmshippingArea">
-                  <h4>Shipping Info</h4>
+                  <h3>Shipping Info</h3>
                   <div className="orderDetailsContainerBox">
                     <div>
-                      <p>
-                        Name: <span>{order.user && order.user.name}</span>
-                      </p>
+                      <p>Name:</p>
+                      <span>{order.user && order.user.name}</span>
                     </div>
                     <div>
-                      <p>
-                        Phone:
-                        <span>
-                          {order.shippingInfo && order.shippingInfo.phoneNo}
-                        </span>
-                      </p>
+                      <p>Phone:</p>
+                      <span>
+                        {order.shippingInfo && order.shippingInfo.phoneNo}
+                      </span>
                     </div>
                     <div>
-                      <p>
-                        Address:{" "}
-                        <span>
-                          {order.shippingInfo &&
-                            `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}
-                        </span>
-                      </p>
+                      <p>Address:</p>
+                      <span>
+                        {order.shippingInfo &&
+                          `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}
+                      </span>
                     </div>
                   </div>
 
-                  <h4>Payment</h4>
+                  <h3>Payment</h3>
                   <div className="orderDetailsContainerBox">
                     <div>
                       <p
@@ -114,14 +109,12 @@ const ProcessOrder = () => {
                     </div>
 
                     <div>
-                      <p>
-                        Amount:{" "}
-                        <span>${order.totalPrice && order.totalPrice}</span>
-                      </p>
+                      <p>Amount:</p>
+                      <span>{order.totalPrice && order.totalPrice}</span>
                     </div>
                   </div>
 
-                  <h4>Order Status</h4>
+                  <h3>Order Status</h3>
                   <div className="orderDetailsContainerBox">
                     <div>
                       <p
@@ -137,7 +130,7 @@ const ProcessOrder = () => {
                   </div>
                 </div>
                 <div className="confirmCartItems">
-                  <h4>Your Cart Items:</h4>
+                  <h3>Your Cart Items:</h3>
                   <div className="confirmCartItemsContainer">
                     {order.orderItems &&
                       order.orderItems.map((item) => (
@@ -147,15 +140,15 @@ const ProcessOrder = () => {
                             {item.name}
                           </Link>{" "}
                           <span>
-                            {item.quantity} X ${item.price} ={" "}
-                            <b>${item.price * item.quantity}</b>
+                            {item.quantity} X ₹{item.price} ={" "}
+                            <b>₹{item.price * item.quantity}</b>
                           </span>
                         </div>
                       ))}
                   </div>
                 </div>
               </div>
-
+              {/*  */}
               <div
                 style={{
                   display: order.orderStatus === "Delivered" ? "none" : "block",

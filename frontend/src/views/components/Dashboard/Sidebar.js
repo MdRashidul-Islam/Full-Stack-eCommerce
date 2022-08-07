@@ -25,14 +25,14 @@ const Sidebar = () => {
 
       <Link to="product">
         <p>
-          <PostAddIcon />
-          All Product
+          <AddIcon />
+          Create Product
         </p>
       </Link>
       <Link to="products">
         <p>
-          <AddIcon />
-          Create Product
+          <PostAddIcon />
+          All Product
         </p>
       </Link>
 

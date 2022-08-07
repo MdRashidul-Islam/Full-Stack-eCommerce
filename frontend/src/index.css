@@ -46,3 +46,25 @@ input[type="number"] {
 .redColor {
   color: red !important;
 }
+
+/* admin dashboard table css */
+.Table {
+  padding: 0 20px;
+}
+
+.Table > Thead > Tr > Th {
+  border: 2px solid #527edc;
+  padding: 10px;
+}
+
+.Table > Tbody > Tr > Td {
+  border: 1px solid #527edc;
+  padding: 5px 10px;
+  transition: all 0.4s ease-in-out;
+}
+.Table > Tbody > Tr > Td:hover {
+  font-weight: bold;
+  color: white;
+
+  background-color: gray;
+}
