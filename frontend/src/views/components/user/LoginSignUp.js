@@ -4,7 +4,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   clearErrors,
   login,
@@ -17,7 +17,6 @@ const LoginSignUp = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user

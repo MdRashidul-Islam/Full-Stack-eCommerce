@@ -1,7 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
@@ -12,6 +12,8 @@ import Loader from "./views/components/common/Loader/Loader";
 import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 
+import UserOptions from "./views/components/common/UserOptions";
+
 import ScrollToTop from "./views/components/common/ScrollToTop";
 
 const Cart = () => import("./views/components/Cart/Cart");
@@ -20,7 +22,6 @@ const OrderSuccess = () => import("./views/components/Cart/OrderSuccess");
 const Payment = () => import("./views/components/Cart/Payment");
 const Shipping = () => import("./views/components/Cart/Shipping");
 
-const UserOptions = () => import("./views/components/common/UserOptions");
 const Dashboard = () => import("./views/components/Dashboard/Dashboard");
 
 const Dhome = lazy(() => import("./views/components/Dashboard/Dhome"));
@@ -87,9 +88,9 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<Loader />}>
-        {isAuthenticated && <UserOptions user={user} />}
-      </Suspense>
+
+      {isAuthenticated && <UserOptions user={user} />}
+
       <Routes>
         <Route
           path="/"
@@ -118,6 +119,7 @@ function App() {
             </Suspense>
           }
         />
+
         <Route
           path="product/:id"
           element={
@@ -138,6 +140,7 @@ function App() {
             </Suspense>
           }
         />
+
         <Route
           path="account"
           element={
@@ -148,6 +151,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="account/update"
           element={
@@ -158,6 +162,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="password/update"
           element={
@@ -168,6 +173,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="password/forgot"
           element={
@@ -176,6 +182,7 @@ function App() {
             </Suspense>
           }
         />
+
         <Route
           path="password/reset/:token"
           element={
