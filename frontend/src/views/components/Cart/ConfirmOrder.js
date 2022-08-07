@@ -69,11 +69,9 @@ const ConfirmOrder = () => {
                 cartItems.map((item) => (
                   <div key={item.product}>
                     <img src={item.image} alt="Product" />
-                    <Link to={`/product/${item.product}`}>
-                      {item.name}
-                    </Link>{" "}
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                     <span>
-                      {item.quantity} X ${item.price} ={" "}
+                      {item.quantity} X ${item.price} =
                       <b>${item.price * item.quantity}</b>
                     </span>
                   </div>
@@ -96,7 +94,7 @@ const ConfirmOrder = () => {
               </div>
               <div>
                 <p>GST:</p>
-                <span>${tax}</span>
+                <span>${tax.toFixed(2)}</span>
               </div>
             </div>
 
@@ -104,7 +102,7 @@ const ConfirmOrder = () => {
               <p>
                 <b>Total:</b>
               </p>
-              <span>${totalPrice}</span>
+              <span>$ {totalPrice.toFixed(2)}</span>
             </div>
 
             <button onClick={proceedToPayment}>Proceed To Payment</button>

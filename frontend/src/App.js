@@ -9,12 +9,12 @@ import { loadUser } from "./redux/actions/userAction";
 import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import store from "./store";
+import Payment from "./views/components/Cart/Payment";
 import Loader from "./views/components/common/Loader/Loader";
-import UserOptions from "./views/components/common/UserOptions";
-
 import ScrollToTop from "./views/components/common/ScrollToTop";
+import UserOptions from "./views/components/common/UserOptions";
 const ConfirmOrder = lazy(() => import("./views/components/Cart/ConfirmOrder"));
-const Payment = lazy(() => import("./views/components/Cart/Payment"));
+
 const OrderSuccess = lazy(() => import("./views/components/Cart/OrderSuccess"));
 const Shipping = lazy(() => import("./views/components/Cart/Shipping"));
 
@@ -267,11 +267,9 @@ function App() {
             element={
               <>
                 <PrivateRoute>
-                  <Suspense fallback={<Loader />}>
-                    <Elements stripe={loadStripe(stripeApiKey)}>
-                      <Payment />
-                    </Elements>
-                  </Suspense>
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <Payment />
+                  </Elements>
                 </PrivateRoute>
               </>
             }
