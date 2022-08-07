@@ -1,11 +1,12 @@
 import Button from "@mui/material/Button";
-import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 import Rating from "@mui/material/Rating";
 import React, { Fragment, useEffect, useState } from "react";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -21,7 +22,6 @@ import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
 import "./ProductDetails.scss";
 import ReviewCard from "./ReviewCard.js";
-import { useAlert } from "react-alert";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -123,7 +123,7 @@ const ProductDetails = () => {
                     <div className="imgContainer">
                       <img
                         className="carouselImg"
-                        key={i}
+                        key={item._id}
                         src={item.url}
                         alt={`${i} Slide`}
                       />

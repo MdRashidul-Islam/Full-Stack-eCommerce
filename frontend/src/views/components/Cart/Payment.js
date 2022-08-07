@@ -9,17 +9,27 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { Fragment, lazy, Suspense, useEffect, useRef } from "react";
+import React, {
+  Fragment,
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../../../redux/actions/cartAction";
 import { clearErrors, createOrder } from "../../../redux/actions/orderAction";
 import Loader from "../common/Loader/Loader";
 import MetaData from "../common/MetaData";
 import "./payment.scss";
+
 const CheckoutSteps = lazy(() => import("./CheckoutSteps"));
 
 const Payment = () => {
+  const [processing, setProcessing] = useState(false);
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,7 +79,7 @@ const Payment = () => {
       const client_secret = data.client_secret;
 
       if (!stripe || !elements) return;
-
+      setProcessing(true);
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -93,14 +103,14 @@ const Payment = () => {
         alert.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
+          setProcessing(false);
           order.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
 
           dispatch(createOrder(order));
-          dispatch(localStorage.removeItem("cartItems"));
-          clearTheCart();
+          dispatch(clearCart());
 
           navigate("/success");
         } else {
@@ -145,7 +155,11 @@ const Payment = () => {
 
           <input
             type="submit"
-            value={`Pay - $${orderInfo && orderInfo.totalPrice}`}
+            value={
+              processing
+                ? "Processing..."
+                : `Pay - $${orderInfo && orderInfo.totalPrice.toFixed(2)}`
+            }
             ref={payBtn}
             className="paymentFormBtn"
           />
