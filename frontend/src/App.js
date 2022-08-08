@@ -9,11 +9,12 @@ import { loadUser } from "./redux/actions/userAction";
 import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import store from "./store";
-import Shipping from "./views/components/Cart/Shipping";
+// import Shipping from "./views/components/Cart/Shipping";
 import Loader from "./views/components/common/Loader/Loader";
 import ScrollToTop from "./views/components/common/ScrollToTop";
 import UserOptions from "./views/components/common/UserOptions";
 
+const Shipping = lazy(() => import("./views/components/Cart/Shipping"));
 const Payment = lazy(() => import("./views/components/Cart/Payment"));
 const ConfirmOrder = lazy(() => import("./views/components/Cart/ConfirmOrder"));
 
@@ -217,7 +218,9 @@ function App() {
           path="shipping"
           element={
             <PrivateRoute>
-              <Shipping />
+              <Suspense fallback={<Loader />}>
+                <Shipping />
+              </Suspense>
             </PrivateRoute>
           }
         />
